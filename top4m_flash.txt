@@ -1,0 +1,3 @@
+    # Top 4M Flash: Reserve 4kbytes at the last 4kbytes block.
+    # This file may include in romcfg.txt
+    Reserved(0x00001000), "SETD", , 0x0007f000, 0, 0, 0;

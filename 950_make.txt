@@ -1,0 +1,142 @@
+
+============================== Make Method (by script)=================================
+1.8M solution:
+	¡Pmake 950_DMP1_16d: For debug only.
+	¡Pmake 950_DMP1_16: For real 64M DRAM. (F/W only use 16M DRAM)
+	¡Pmake 950_DMP1_16r: For real 16M DRAM. (F/W only user 16M DRAM)
+2.16M/32M solution:
+	¡Pmake 950_16d: For debug only.
+	¡Pmake 950_16: For real 64M DRAM. (F/W only use 16M DRAM)
+	¡Pmake 950_16r: For real 16M DRAM. (F/W only user 16M DRAM)
+
+============================== Make Method (step by step)==============================
+1. 8M solution (release):
+	. #define CT950_STYLE in winav.h.
+	. #define CT951_PLATFORM in customer.h.
+	. #define     DRAM_CONFIGURATION_TYPE           DRAM_SIZE_16 in internal.h.
+	. #define     DECODER_SYSTEM      DVD909R_EVAL in internal.h.
+	. #define     CPU_SPEED       CPU_146M in internal.h.			
+	. SUPPORT_950		= 1 in makefile.
+	. Copy DVD909_16M.ld to dvd909.ld.
+	. Remove "srv_dram.a" in dvd909.ld.
+	. Select "mclk_config     00000092    # 146MHz" in address.txt.
+	. Select "prom_config     20621031    # Serial   8M Latency=1 FastRead   SCLK_SEL=2 66MHz" in address.txt.	
+	. Copy the files in 950_Files to project root folder.
+	. Copy the files in 950_Files\OSDEuro_16M to OSDString folder.
+	. Copy the files in 950_Files/BMP to BMP folder.
+	. Copy 950_Files/VD to VD.
+	. Copy parnodrm.a to pardrm.a.
+	. Copy romcfg_16M_951_DMP1.txt to romcfg.txt.
+	. Remove "encoder.a" in makefile.
+	. //#define SUPPORT_ENCODE_JPG_PICTURE in winav.h.
+	. //#define SUPPORT_COPY_FILE_IN_MM_UI in winav.h.
+	
+	. //#define SUPPORT_DELETE_FILE_IN_THUMB_UI in winav.h.
+	
+2. 8M solution (Debug in CT950 platform):	
+	. #define CT950_STYLE in winav.h.
+	. #define CT951_PLATFORM in customer.h.
+	. #define     DRAM_CONFIGURATION_TYPE           DRAM_SIZE_16 in internal.h.
+	. #define     DECODER_SYSTEM      DVD909R_EVAL in internal.h.
+	. #define     CPU_SPEED       CPU_146M in internal.h.		
+	. SUPPORT_950		= 1 in makefile.
+	. Copy DVD909_16MDBG.ld to dvd909.ld.
+	. Remove "srv_dram.a" in dvd909.ld.
+	. Select "mclk_config     00000092    # 146MHz" in address.txt.
+	. Select "prom_config     20621031    # Serial   8M Latency=1 FastRead   SCLK_SEL=2 66MHz" in address.txt.	
+	. Copy the files in 950_Files to project root folder.
+	. Copy the files in 950_Files\OSDEuro_16M to OSDString folder.
+	. Copy the files in 950_Files/BMP to BMP folder.
+	. Copy 950_Files/VD to VD.
+	. Copy parnodrm.a to pardrm.a.
+	. Copy romcfg_16MDBG_951_DMP1.txt to romcfg.txt.
+	. Remove "encoder.a" in makefile.
+	. //#define SUPPORT_ENCODE_JPG_PICTURE in winav.h.
+	. //#define SUPPORT_COPY_FILE_IN_MM_UI in winav.h.
+	
+	. //#define SUPPORT_DELETE_FILE_IN_THUMB_UI in winav.h.
+	
+3. 8M solution (Debug in CT909S platform):
+	. #define CT950_STYLE in winav.h.
+	. //#define CT951_PLATFORM in customer.h.
+	. #define     DRAM_CONFIGURATION_TYPE           DRAM_SIZE_16 in internal.h.
+	. #define     DECODER_SYSTEM      DVD909S_EVAL in internal.h.
+	. #define     CPU_SPEED       CPU_146M in internal.h.	
+	. SUPPORT_950		= 1 in makefile.
+	. Copy DVD909_16MDBG.ld to dvd909.ld.
+	. Remove "srv_dram.a" in dvd909.ld.
+	. Select "mclk_config     00000092    # 146MHz" in address.txt.
+	. Select "prom_config     20621031    # Serial   8M Latency=1 FastRead   SCLK_SEL=2 66MHz" in address.txt.	
+	. Copy the files in 950_Files to project root folder.
+	. Copy the files in 950_Files\OSDEuro_16M to OSDString folder.
+	. Copy the files in 950_Files/BMP to BMP folder.
+	. Copy 950_Files/VD to VD.
+	. Copy parnodrm.a to pardrm.a.
+	. Copy romcfg_16MDBG_951_DMP1.txt to romcfg.txt.
+	. Remove "encoder.a" in makefile.
+	. //#define SUPPORT_ENCODE_JPG_PICTURE in winav.h.
+	. //#define SUPPORT_COPY_FILE_IN_MM_UI in winav.h.
+	
+	. //#define SUPPORT_DELETE_FILE_IN_THUMB_UI in winav.h.
+	
+4. 16M solution (release):
+	. #define CT950_STYLE in winav.h.
+	. #define CT951_PLATFORM in customer.h.
+	. #define     DRAM_CONFIGURATION_TYPE           DRAM_SIZE_16 in internal.h.
+	. #define     DECODER_SYSTEM      DVD909R_EVAL in internal.h.
+	. #define     CPU_SPEED       CPU_146M in internal.h.
+	. SUPPORT_950		= 1 in makefile.
+	. Copy DVD909_16M.ld to dvd909.ld.
+	. Remove "srv_dram.a" in dvd909.ld.
+	. Select "mclk_config     00000092    # 146MHz" in address.txt.
+	. Select "prom_config     20621031    # Serial   8M Latency=1 FastRead   SCLK_SEL=2 66MHz" in address.txt.	
+	. Copy the files in 950_Files to project root folder.
+	. Copy the files in 950_Files\OSDEuro_16M to OSDString folder.
+	. Copy the files in 950_Files/BMP to BMP folder.
+	. Copy 950_Files/VD to VD.
+	. Copy parnodrm.a to pardrm.a.
+	. Copy romcfg_16M_951.txt to romcfg.txt.
+	. #define SUPPORT_ENCODE_JPG_PICTURE in winav.h.
+	. #define SUPPORT_COPY_FILE_IN_MM_UI in winav.h.
+	
+	. #define SUPPORT_DELETE_FILE_IN_THUMB_UI in winav.h.
+
+5. 16M solution (Debug in CT950 platform):
+	. #define CT950_STYLE in winav.h.
+	. #define CT951_PLATFORM in customer.h.
+	. #define     DRAM_CONFIGURATION_TYPE           DRAM_SIZE_16 in internal.h.
+	. #define     DECODER_SYSTEM      DVD909R_EVAL in internal.h.
+	. #define     CPU_SPEED       CPU_146M in internal.h.	
+	. SUPPORT_950		= 1 in makefile.
+	. Copy DVD909_16MDBG.ld to dvd909.ld.
+	. Remove "srv_dram.a" in dvd909.ld.	
+	. Select "mclk_config     00000092    # 146MHz" in address.txt.
+	. Select "prom_config     20621031    # Serial   8M Latency=1 FastRead   SCLK_SEL=2 66MHz" in address.txt.	
+	. Copy the files in 950_Files to project root folder.
+	. Copy the files in 950_Files\OSDEuro_16M to OSDString folder.
+	. Copy the files in 950_Files/BMP to BMP folder.
+	. Copy 950_Files/VD to VD.
+	. Copy parnodrm.a to pardrm.a.
+	. Copy romcfg_16MDBG_951.txt to romcfg.txt.
+	. #define SUPPORT_ENCODE_JPG_PICTURE in winav.h.
+	. #define SUPPORT_COPY_FILE_IN_MM_UI in winav.h.
+	.
+	. #define SUPPORT_DELETE_FILE_IN_THUMB_UI in winav.h.
+
+Note: If the 16M (DRAM) solution run in real 16M DRAM, please Select "dram_config     0004001b    # 11011: 16Mb , 1Mb x 16 " in address.txt.
+
+============================== CT951 Make Method =================================
+. Copy STB folder to project.
+. make 950_16
+. After starting compiling, "Ctrl+C" to break it.
+. make clean.
+. make dvb
+. After starting compiling, "Ctrl+C" to break it.
+. make clean.
+. Copy romcfg_DMP_DVB.txt to romcfg.txt.
+. Copy all files in 950_Files\OSDEuro_956 to OSDString.
+. make
+
+
+
+===============================================================================

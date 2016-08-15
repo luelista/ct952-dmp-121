@@ -1,0 +1,42 @@
+
+    #====================================#
+    # DVD909 Configure File for ROM Make #
+    #====================================#
+
+    #   Syntax: Name, SectionName, LMA, RMA, Zip_Flag, Load_Flag, ProgEntry_Flag;
+    #
+    #                 Name: Filename or section name (for tsim/elf)
+    #          SectionName: Name in section table (must be 4 characters)
+    #                  LMA: Logical Memory Address
+    #                  RMA: Rom Memory Address
+    #             Zip_Flag: 0=None, 1=Zipped
+    #            Load_Flag: 0=None, 1=Load
+    #       ProgEntry_Flag: 0=None, 1=Program Entry
+
+    include("setd_cfg.txt");
+
+    "dvd909.tsim"
+    {
+        ".rom_vectors", "ROMV", , , 1, 1, 1;
+        ".text",        "TEX2", , , 0, 0, 0;
+        ".text_dram",   "TEXT", , , 1, 1, 0;
+        ".rodata",      "RODA", , , 0, 0, 0;
+        ".data",        "DATA", , , 1, 1, 0;
+        ".osdstr",      "Engl", , , 1, 1, 0;
+    }
+
+    "ac3_dts.bin",  "ACDT", , , 1, 0, 0;
+    "mpg_pcm.bin",  "MPPC", , , 1, 0, 0;
+    "wma_l1.bin",   "WMA ", , , 1, 0, 0;
+    "logo.bin",     "LOGO", , , 0, 0, 0;
+    #"OSDString\Unicode_Fontable.bin",     "FONT", , , 0, 0, 0;
+    #"OSDString\Unicode_Table.bin",     "UNIC", , , 0, 0, 0;
+    #"OSDString\Unicode_Height_Width.bin",     "SIZE", , , 0, 0, 0;
+    #"OSDString\SHIFT_JIS_TABLE.bin",     "JIST", , , 0, 0, 0;
+    #"OSDString\BIG5_TABLE.bin",     "BIGT", , , 0, 0, 0;
+    "logo1.bin",     "LOG1", , , 0, 0, 0;
+    "logo2.bin",     "LOG2", , , 0, 0, 0;
+    "snd1.bin",     "SND1", , , 0, 0, 0;
+    "flash_autotest.bin", "SFAT", 0x40020000, , 1, 0, 0;
+
+    include("OSDString\ostr_romcfg.txt");
