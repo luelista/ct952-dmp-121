@@ -1,0 +1,20 @@
+
+    #====================================#
+    # UPG909 Configure File for ROM Make #
+    #====================================#
+
+    #   Syntax: Name, SectionName, LMA, RMA, Zip_Flag, Load_Flag, ProgEntry_Flag;
+    #
+    #                 Name: Filename or section name (for tsim/elf)
+    #          SectionName: Name in section table (must be 4 characters)
+    #                  LMA: Logical Memory Address
+    #                  RMA: Rom Memory Address
+    #             Zip_Flag: 0=None, 1=Zipped
+    #            Load_Flag: 0=None, 1=Load
+    #       ProgEntry_Flag: 0=None, 1=Program Entry
+
+    include("setd_cfg.txt");
+
+    "rominfo.bin",  		"INFO", 0x40000b00, , 0, 1, 0;
+    "flash.bin",  			"CODE", 0x40001000, , 1, 1, 1;
+    "dvd909.rom",   		"ROM ", , , 0, 0, 0;

@@ -1,0 +1,155 @@
+#ifndef __ALARM_H__
+#define __ALARM_H__
+#ifdef __cplusplus
+        extern  "C"     {
+#endif
+
+//#define SUUPORT_ALARM_AGAIN
+
+//define the time to alarm again after user stop it.
+#define ALARM_AGAIN_TIME        5
+
+typedef struct tagALARM_TM
+{
+    //BYTE bSec;    
+    BYTE bMin;
+    BYTE bHr;
+    //BYTE bDate;
+    //BYTE bMon;
+    //BYTE bYear;
+} ALARM_TM, *PALARM_TM;
+
+enum ALARM_STATE
+{
+    ALARM_NONE,
+    ALARM_TRIGGERED,
+    ALARM_GOING
+};
+
+extern BOOL __bTriggerAlarm;
+extern BYTE __bAlarmState;
+
+void _ALARM_PlaySound(void);
+void _ALARM_StopPlaySound(void);
+void _ALARM_Check ( void );
+void _ALARM_Monitor ( void );
+
+void ALARM_Initial ( void );
+void ALARM_Enable(void);
+void ALARM_Disable(void);
+void ALARM_Set ( PALARM_TM ptm);
+void ALARM_Get ( PALARM_TM ptm );
+void ALARM_Stop ( void );
+void ALARM_Trigger ( void );
+void ALARM_RealStop(void);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//UI part
+#include "settime.h"
+#include "dialog.h"
+
+typedef enum tagALARM_ID_LIST
+{
+    ALARM_MAIN_BEGIN=0,
+    ALARM_MAIN_ENABLE = ALARM_MAIN_BEGIN,
+    ALARM_MAIN_SET_TIME,
+    ALARM_MAIN_EXIT,
+    ALARM_MAIN_END = ALARM_MAIN_EXIT,
+
+    //Enable
+    ALARM_ENABLE_BEGIN = 6,
+    ALARM_ENABLE_ON = ALARM_ENABLE_BEGIN,
+    ALARM_ENABLE_OFF,
+    ALARM_ENABLE_END = ALARM_ENABLE_OFF,
+   
+} ALARM_ID_LIST;
+
+#define ALARM_MAIN_MENU_START_X                         (MAINMENU_CONTENT_REGION_START_X+60)
+#define ALARM_MAIN_MENU_START_Y                         (MAINMENU_CONTENT_REGION_START_Y+40)
+
+//define the maximum visible menu items.
+#define ALARM_MAX_VISIBLE_MENU_ITEM_NUM                 5
+
+//define the mode of clock
+#define ALARM_MODE_MENU                                 0
+#define ALARM_MODE_SET_TIME                             1
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//Export APIs
+void ALARM_Entry(void);
+void ALARM_Exit(BYTE bClearBackground);
+BYTE ALARM_ProcessKey(void);
+BYTE ALARM_Recover(BYTE bRecoverRegion);
+void ALARM_SetTime(BYTE bHour, BYTE bMinute, BYTE bSecond);
+void ALARM_CancelSetTime(void);
+
+//Internal APIs
+void _ALARM_ConfigOSDRegion(void);
+void _ALARM_ShowMenu(void);
+void _ALARM_ProcessMenuItem(BYTE bID);
+void _ALARM_StopPlayMode(void);
+void _ALARM_ShowNotifyUserDlg(void);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+#ifdef ALARM_MAIN_FILE
+#include "OSDString\\strextrn.h"
+
+MENU_ITEM _MENU_ITEM_ALARM_Enable[] = {
+    {aMENUOn, NULL, MENU_ITEM_STATE_ENABLE, ALARM_ENABLE_ON},
+    {aMENUOff, NULL, MENU_ITEM_STATE_ENABLE, ALARM_ENABLE_OFF},
+};
+
+MENU _MENU_ALARM_Enable = {MENU_TYPE_GENERAL, (ALARM_ENABLE_END-ALARM_ENABLE_BEGIN+1), MENU_START_X_OPTIMIZED, MENU_START_Y_OPTIMIZED, MENU_WIDTH_OPTIMIZED, MENU_ITEM_ALIGNMENT_LEFT, _MENU_ITEM_ALARM_Enable, 0, 1, 1};
+
+MENU_ITEM _MENU_ITEM_ALARM[] = {
+    {aALARMEnable, (PMENU)&_MENU_ALARM_Enable, MENU_ITEM_STATE_ENABLE, ALARM_MAIN_ENABLE},
+    {aCLOCKSetTime, NULL, MENU_ITEM_STATE_ENABLE, ALARM_MAIN_SET_TIME},
+    {aCLOCKExit, NULL, MENU_ITEM_STATE_ENABLE, ALARM_MAIN_EXIT},
+};
+
+MENU _MENU_ALARM = {MENU_TYPE_GENERAL, (ALARM_MAIN_END-ALARM_MAIN_BEGIN+1), ALARM_MAIN_MENU_START_X, ALARM_MAIN_MENU_START_Y, MENU_WIDTH_OPTIMIZED, MENU_ITEM_ALIGNMENT_LEFT, _MENU_ITEM_ALARM, 0, 0, MENU_ITEM_NO_CHECKED_ITEM};
+
+#ifdef NL_SOLUTION
+#define ALARM_SETTIME_TITLE_TIME_DISTANCE_V     40
+#else
+#define ALARM_SETTIME_TITLE_TIME_DISTANCE_V     20
+#endif //NL_SOLUTION
+
+#ifdef SHOW_CLOCK_AT_AM_PM
+SETTIME_TIME _ALARM_SET_TIME = {SETTIME_DISPLAY_MODE_HOUR_MINUTE, 0, 0, 0, (((SET_TIME_DIALOG_WIDTH-SETTIME_DISPLAY_MODE_HOUR_MINUTE_WIEDH)>>1)-10), ALARM_SETTIME_TITLE_TIME_DISTANCE_V};
+#else
+SETTIME_TIME _ALARM_SET_TIME = {SETTIME_DISPLAY_MODE_HOUR_MINUTE, 0, 0, 0, ((SET_TIME_DIALOG_WIDTH-SETTIME_DISPLAY_MODE_HOUR_MINUTE_WIEDH)>>1), ALARM_SETTIME_TITLE_TIME_DISTANCE_V};
+#endif
+SETTIME_DLG_ACTION _ALARM_SET_TIME_Action = {ALARM_SetTime, ALARM_CancelSetTime};
+
+//Notify user dialog box
+#define ALARM_DIALOG_WIDTH                      360
+#define ALARM_DIALOG_HEIGHT                     200
+#define ALARM_DIALOG_BUTTON_NUM                 0
+
+#define ALARM_DIALOG_CONTENT_DISTANCE_V         40
+
+DIALOG _ALARMDlg = {
+    (MAINMENU_CONTENT_REGION_START_X+((MAINMENU_CONTENT_REGION_WIDTH-ALARM_DIALOG_WIDTH)>>1)),
+    (MAINMENU_CONTENT_REGION_START_Y+((MAINMENU_CONTENT_REGION_HEIGHT-ALARM_DIALOG_HEIGHT)>>1)),
+    ALARM_DIALOG_WIDTH,
+    ALARM_DIALOG_HEIGHT,
+    aALARMDlgTitle,
+    DIALOG_TITLE_STRING_ALIGNMENT_CENTER,
+    ALARM_DIALOG_BUTTON_NUM,
+    0,
+    0,
+    0,
+    NULL
+};
+
+#endif //ALARM_MAIN_FILE
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifdef __cplusplus
+        }
+#endif
+#endif  // __ALARM_H__
+

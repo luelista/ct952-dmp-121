@@ -1,0 +1,143 @@
+---- key_next Matches (143 in 22 files) ----
+Cc.c:3427:    case    KEY_NEXT:
+Cc.c:3437:                    if ( bKey == KEY_NEXT )
+Cc.c:3450:                if (bKey==KEY_NEXT)
+Cc.c:4126:// 2. KEY_NEXT trigger play
+Cc.c:4146:// :: KEY_NEXT trigger play
+Cc.c:4149:// DVD_173Micky, don't allow KEY_NEXT to trigger play.
+Cc.c:4152:    if ( __bKey == KEY_NEXT )   // CDROM_M1 won't do the flow
+Cc.c:5989:                __bFWKey = KEY_NEXT;
+Cckey.c:619:                            __bFWKey= KEY_NEXT;
+Cckey.c:1857:   if ( __bKey == KEY_NEXT )
+Cckey.c:1898:    case    KEY_NEXT:
+Cckey.c:1900:            if ( __bKey == KEY_NEXT )
+Cckey.c:1906:            // ** TCH1.00; begin... Enhance the XQ request. Push KEY_NEXT will clear REPEAT_CHAPTER only
+Cckey.c:1951:            if (__bKey==KEY_NEXT)
+Digest.c:737:        case    KEY_NEXT:
+Digest.c:738:            if ( __bKey == KEY_NEXT ) // next digest page
+Input.h:121:#define         KEY_NEXT                (INPUT_KEY_GROUP4+1)             // select next track or menu
+Ir.h:65:KEY_SF           ,KEY_N5           ,KEY_NEXT         ,KEY_N6           ,//18-1B
+Ir.h:99:KEY_SF           ,KEY_N5           ,KEY_NEXT         ,KEY_N6           ,//18-1B
+Ir.h:133:KEY_SF           ,KEY_N5           ,KEY_NEXT         ,KEY_N6           ,//18-1B
+Ir.h:183:KEY_DISPLAY      ,KEY_NEXT         ,KEY_NO_KEY       ,KEY_NO_KEY       ,//58-5B
+Ir.h:213:KEY_N5           ,KEY_N6           ,KEY_PREV         ,KEY_NEXT         ,//48-4B
+Ir.h:236:KEY_LEFT         ,KEY_DOWN         ,KEY_NEXT         ,KEY_PAUSE        ,//1C-1F
+Ir.h:282:KEY_PAUSE        ,KEY_SF           ,KEY_DISPLAY      ,KEY_NEXT         ,//4C-4F
+Ir.h:316:KEY_REPEAT_AB    ,KEY_RANDOM       ,KEY_NO_KEY       ,KEY_NEXT         ,//4C-4F
+Ir.h:353:KEY_DISPLAY      ,KEY_NEXT         ,KEY_NO_KEY       ,KEY_NO_KEY       ,//58-5B
+Ir.h:382:KEY_SPST_CTL   ,KEY_NEXT       ,KEY_ANGLE_CTL  ,KEY_SCB        , // 44~47
+Ir.h:403:KEY_DISPLAY    ,KEY_VOL_UP     ,KEY_NEXT       ,KEY_PREV       , // 0C~0F
+Ir.h:428:KEY_DISPLAY    ,KEY_VOL_UP     ,KEY_NEXT       ,KEY_PREV       , // 0C~0F
+Ir.h:466:KEY_SF           ,KEY_N5           ,KEY_NEXT         ,KEY_N6           ,//18-1B
+Ir.h:510:KEY_PREV         ,KEY_NEXT         ,KEY_SCB          ,KEY_BAND         ,//40-43
+Ir.h:545:KEY_SPST_CTL   ,KEY_NEXT       ,KEY_ANGLE_CTL  ,KEY_SCB        , // 44~47
+Ir.h:578:KEY_PREV         ,KEY_NEXT         ,KEY_SCB          ,KEY_GOTOTIME     ,//40-43
+Ir.h:599:KEY_NEXT            ,KEY_PREV            ,KEY_NO_KEY          ,KEY_NO_KEY          ,  // 0C - 0F
+Ir.h:613:KEY_SPST_CTL        ,KEY_NEXT            ,KEY_ANGLE_CTL       ,KEY_SCB             ,  // 44 - 47
+Ir.h:634:KEY_NEXT       ,KEY_NO_KEY    ,KEY_NO_KEY     ,KEY_NO_KEY   , // 10~13
+Ir.h:664:KEY_NEXT       ,KEY_STOP       ,KEY_SF         ,KEY_MUTE 	    , // 00~03
+Ir.h:715:KEY_SPST_CTL        ,KEY_NEXT            ,KEY_ANGLE_CTL       ,KEY_LEFT     ,  // 44 - 47
+Ir.h:727:KEY_NO_KEY          ,KEY_NEXT            ,KEY_AUDIO_LR        ,KEY_PREV     ,  // 04 - 07
+Ir.h:743:KEY_SPST_CTL        ,KEY_NEXT            ,KEY_ANGLE_CTL       ,KEY_PREV     ,  // 44 - 47
+Ir.h:778:KEY_SPST_CTL        ,KEY_NEXT            ,KEY_ANGLE_CTL       ,KEY_LEFT     ,  // 44 - 47
+Ir.h:799:KEY_PREV            ,KEY_NEXT           ,KEY_NO_KEY         ,KEY_NO_KEY     ,//10-13
+Ir.h:839:KEY_NEXT            ,KEY_PREV            ,KEY_NO_KEY          ,KEY_NO_KEY          ,  // 5C - 5F
+Ir.h:861:KEY_POWER           ,KEY_NEXT           ,KEY_NO_KEY         ,KEY_NO_KEY         ,   // 2c - 2f
+Ir.h:889:KEY_VOL_UP          ,KEY_NEXT            ,KEY_FUNCTION        ,KEY_CLEAR/*KEY_VIDEO_OUTPUT_CTL*/,  // 10 - 13
+Ir.h:921:KEY_NEXT                ,KEY_PREV           ,KEY_RETURN         ,KEY_ENTER          ,  // 10 - 13
+Ir.h:955:KEY_PREV,			KEY_NEXT,		KEY_VOL_DOWN,	KEY_NO_KEY         ,   // 10 - 13
+Ir.h:995:KEY_DOWN,			KEY_NEXT,		KEY_PLAY_PAUSE,	KEY_NO_KEY         ,   // 04 - 07
+Ir.h:1045:KEY_NO_KEY              ,KEY_NEXT,		KEY_PLAY_PAUSE,  KEY_VOL_UP,  // 14 - 17
+Linear.c:103://  Parameters  : bKey: KEY_NEXT/KEY_PREV
+Linear.c:117:    // When KEY_NEXT is pressed or current track play end
+Linear.c:124:    // 1. when KEY_NEXT or KEY_PREV is pressed
+Linear.c:184:        case    KEY_NEXT:           // play the next track
+Linear.c:198:                    if (bKey == KEY_NEXT)
+Linear.c:214:                    // wyc1.10, make KEY_NEXT / KEY_PREV repeat playing in program playing mode. Auto play will stop when program playing to last entry.
+Linear.c:229:                        if (bKey == KEY_NEXT)
+Linear.c:238:                if (bKey == KEY_NEXT)
+Linear.c:288:                if (bKey == KEY_NEXT)
+Linear.c:316:                    // LLY0.83b-2, Let MM_Action(KEY_NEXT) handle NEXT action
+Linear.c:322:                    if(MM_ActionForChangeTrack(KEY_NEXT, __wPlayItem)==MM_ACTION_CONTINUE)
+Linear.c:326:                         LINEAR_JPGAction(KEY_NEXT,0);
+Linear.c:371:                    // LLY0.83b-2, Let MM_Action(KEY_NEXT) handle NEXT action
+Linear.c:717:    LINEAR_ChangeTrack(KEY_NEXT, 1);
+Linear.c:852:        // cause KEY_NEXT/PREV will show time 0 then chapter time
+Linear.c:1539://  Return      :   KEY_NEXT, increase the track number
+Linear.c:1548:    if ( (bKey!=KEY_NEXT) && (bKey!=KEY_PREV) && (bKey!=KEY_NUMBER) )
+Linear.c:1557:        if( (bKey==KEY_NEXT) || (bKey==KEY_PREV) )
+Linear.c:1593:            // ** 0.20; If KEY_NEXT by IR, just do it. Don't care of REPEAT Mode
+Linear.c:1595:            // [1] bKey==KEY_NEXT
+Linear.c:1597:            //if ( __bKey != KEY_NEXT )
+Linear.c:1598:            if( (bKey==KEY_NEXT) && (__bKeySource != KEY_FROM_ISR) )
+Linear.c:1809://  Description :   play key_next/key_prev/key_number for play jpg from SPI flash
+Linear.c:1811://                  bKey: key_next/key_prev/key_number
+Linear.c:1813://  Return      :   TRUE: Key_next/key_prev/key_number work
+Linear.c:1814://                      FALSE: Key_next/key_prev/key_number can't work
+Linear.c:1822:            case    KEY_NEXT:
+Media.c:260:            // next file automatically because KEY_NEXT / KEY_PREV is reject in MEDIA_MediaSelection_ProcessKey.
+Mm_play.c:1111:                        LINEAR_ChangeTrack(KEY_NEXT, (BYTE)NULL);
+Mm_play.c:1174:                __bFWKey=KEY_NEXT;
+Mm_play.c:1181:            __bFWKey=KEY_NEXT;
+Mm_play.c:1192:                // Then, playback a un-support file ==> KEY_NEXT will let it to find next chapter (MP4 only)
+Mm_play.c:1575:                __bFWKey=KEY_NEXT;
+Mm_play.c:2096:                __bFWKey=KEY_NEXT;
+Mm_play.c:2124://                  ex.KEY_NEXT/ KEY_PREV
+Mm_play.c:2125://  Return      :   KEY_NEXT/ KEY_PREV: same the input key while the final
+Mm_play.c:2162:    if ( bKey == KEY_NEXT)
+Mm_play.c:3352:            __bModeCmd=KEY_PLAY;  //Winnie 1.03, fix first time key press key_next then show key play
+Mm_play.c:3723:    case KEY_BROWSE: //CoCo2.61, add picture browse mode. only KEY_NEXT/KEY_PREV will change to next or previous picture.
+Mm_play.c:3777:    case    KEY_NEXT:
+Mm_play.c:3797:                    // wyc1.05, when acrossing dir by KEY_NEXT / KEY_PREV and select cursor and active cursor
+Mm_play.c:3868:                        // wyc1.05, when acrossing dir by KEY_NEXT / KEY_PREV and select cursor and active cursor
+Mm_ui.c:58:// wyc1.05, add a new variable to record the type of moving cursor across boundary. One is KEY_NEXT/KEY_PREVher is KEY_UP/KEY_DOWN.
+Mm_ui.c:687:    case    KEY_NEXT:
+Mm_ui.c:697:        // wyc1.07a, not allow KEY_NEXT / KEY_PREV when file playing and UI is in program list mode.
+Mm_ui.c:700:            // wyc1.20-909, when KEY_NEXT/KEY_PREV in program list mode & audio play mode. Don't call OSDMM_MSG_STOP, otherwise the help
+Mm_ui.c:701:            // message in bottom will disappear when KEY_NEXT/KEY_PREV.
+Mm_ui.c:710:            // wyc0.87, make KEY_NEXT / KEY_PREV in stop mode to enter next / prev page in FM UI mode.
+Mm_ui.c:711:            if ((bKey==KEY_NEXT) || (bKey == KEY_SCF))
+Mm_ui.c:713:                // When highlight in program list mode, need to support the KEY_NEXT to next program list page.
+Mm_ui.c:725:                    // wyc0.70, to support KEY_NEXT / KEY_PREV OK in sort/filter mode, so need to add new checking mechanism here.
+Mm_ui.c:2704:        // LLY.276p-4, transfer KEY_PLAY as KEY_NEXT while
+Mm_ui.c:2947:    case    KEY_NEXT:
+Mm_ui.c:2972:            if (((__btInputProgram == FALSE) || ((__btInputProgram == TRUE) && (__bKey == KEY_NEXT || __bKey == KEY_PREV))) && (__MMSelectCursor.bPosition == POS_FILE_LIST))
+Mm_ui.c:3260:                __bFWKey=KEY_NEXT;
+Mm_ui.c:3272:                __bFWKey=KEY_NEXT;
+Mm_ui.c:3294:                __bFWKey=KEY_NEXT;
+Mm_ui.c:3306:                __bFWKey=KEY_NEXT;
+Monitor.c:789:                    __bFWKey = KEY_NEXT;
+Monitor.c:987:            __bFWKey = KEY_NEXT;
+Monitor.c:1186:                    // DVD-Title, 1/16(PBC) KEY_NEXT inhibit. Just go MENU_ROOT. If can't, do STOP.
+Monitor.c:1260:                    __bFWKey=KEY_NEXT;
+Monitor.c:1432:                    // DVD-Title, 1/16(PBC) KEY_NEXT inhibit. Just go MENU_ROOT. If can't, do STOP.
+Monitor.c:1468:                __bFWKey=KEY_NEXT;
+Navigate.h:465://#define USER_KEY_ABORT (__bISRKey == KEY_TITLE ||__bISRKey == KEY_MENU||__bISRKey == KEY_PREV||__bISRKey == KEY_NEXT||__bISRKey == KEY_PBC||__bISRKey == KEY_DIGEST||__bISRKey == KEY_OPEN_CLOSE||__bISRKey == KEY_POWER)
+Osd.c:257:                    // filter special slide show case KEY_NEXT/PREV and then "MSG_PLAYING"
+Osdbmark.c:261:    case KEY_NEXT:
+Osdmm.c:125://              :   OSDMM_MSG_UPDATE_FILE_WINDOW_NEXT: Change to the next page when user presses KEY_NEXT to show the next page.
+Osdprgm.c:476:    case KEY_NEXT:
+Osdsrch.c:551:    //alex070,20041207 fix the bug #156Search e KEY_Next ==> Program, 
+Osdsrch.c:573:        case    KEY_NEXT:
+Poweronmenu.c:1630:        __bModeCmd=KEY_PLAY;  //Winnie 1.03, fix first time key press key_next then show key play
+Poweronmenu.c (950_files):1630:        __bModeCmd=KEY_PLAY;  //Winnie 1.03, fix first time key press key_next then show key play
+Readme.txt:198:    - Fix mantis bug #2995: press key_next under BROWSE MODE, musci will play for a while  (remove the modification from HAL.C to UTL.C) { [UTL] }
+Readme.txt:788:    - Fix JPEG slideshow hangs when pressing KEY_NEXT or KEY_PREV continuously and quickly. {JPEGFMT.C/JPEGFMT.H}
+Readme.txt:1109:    - Fix "can't playback while press KEY_NEXT of 兆馳 No5 title DVD+RW" (外圈染料有問題) { [MMANAGER] }
+Readme.txt:2629:    - Fix AVI playback may hang sometime if pressing KEY_NEXT/ KEY_PREV frequently { [MMANAGER] }
+Readme.txt:2908:    - Fix Ritek 4/1 --> KEY_NEXT, the "parental level N" still picture don't wait 3 sec issue. { [CELL] }
+Readme.txt:3322:    - Let slideshow completed quickly when KEY_NEXT. {DISP.C/ DISP.H}
+TFTSetup.c:472:		case KEY_NEXT:
+Thumb.c:591:    case KEY_NEXT:  //change to next page
+Utl.c:972:    // So, issue KEY_NEXT to playback next track.
+Utl.c:2469:        // So, we maybe see a large OSD time while playback CDROM motion file w/ KEY_NEXT
+Utl.c:2619:    // Micky1.03, fix A-Bex (motocycle) KEY_NEXT, video play-> flicker-> play.
+Utl.c:4485:    // Otherwise, previous OSD maybe display until time-out if user press KEY_NEXT immediately
+Utl.c:5678:        // then press KEY_NEXT, it will go random mode but UI still keep in program edit mode problem.
+Utl.c:5787:            // ** TCH1.55-1; Set __bScan as SCF/SCB + KEY_NEXT/KEY_PREV will go here directly.
+Utl.c:6107:        // Since the STC maybe less than 1st SCR when press KEY_NEXT.
+Utl.c:6913:    // Fix bug 0002995: press key_next under BROWSE MODE, musci will play for a while
+Utl.c:6976:        if (__bISRKey == KEY_NEXT || __bFWKey == KEY_NEXT)
+Utl.c:7039:             ||__bISRKey == KEY_PREV||__bISRKey == KEY_NEXT
+Utl.c:8130:                            LINEAR_ChangeTrack(KEY_NEXT, (BYTE)NULL);
+Utl.c:8908:                __bFWKey = KEY_NEXT;

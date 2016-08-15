@@ -1,0 +1,108 @@
+#================================================================================
+# General/Configurable Register Setting
+#================================================================================
+
+write_addr_0    00000000    # set GPC[3] output to low
+write_value_0   00000000    # = (1 << 3)
+write_addr_1    00000000    # set GPC[3] IO direction to output mode
+write_value_1   00000000    # = ~(1 << 3)
+
+# Output low to GPC[3](IOMute). (For DVD956A_DEV, DMP956A_EVAL and DMP955A_EVAL. Ref: pio.h)
+#write_addr_0    80004010    # set GPC[3] output to low
+#write_value_0   00000008    # = (1 << 3)
+#write_addr_1    80004018    # set GPC[3] IO direction to output mode
+#write_value_1   fffffff7    # = ~(1 << 3)
+
+# Output low to GPC[5](IOMute). (For DMP952A_EVAL. Ref: pio.h)
+#write_addr_0    80004010    # set GPC[5] output to low
+#write_value_0   00000020    # = (1 << 5)
+#write_addr_1    80004018    # set GPC[3] IO direction to output mode
+#write_value_1   ffffffdf    # = ~(1 << 5)
+
+write_addr_2    00000000    # zero ==> disabled.
+write_value_2   00000000
+
+write_addr_3    00000000    # zero ==> disabled.
+write_value_3   00000000
+
+
+#================================================================================
+# Unzip Buffer, SP, Code Protect & Uart Configuration
+#================================================================================
+unzip_buff      40002000
+sp1             40012000
+code_protect    00000003
+
+uart_config     00000000    # Output bootcode message to UART1
+#uart_config     00000001    # Output bootcode message to UART2
+#uart_config     00000002    # Output bootcode message to UART1 and Redirect UART1 output to DSU1
+
+
+#================================================================================
+# MCLK Configuration
+#================================================================================
+#mclk_config     0000001b    # 27MHz
+#mclk_config     00000032    # 50MHz
+#mclk_config     00000064    # 100MHz
+#mclk_config     00000078    # 120MHz
+mclk_config     00000085    # 133MHz
+#mclk_config     0000008e    # 142MHz
+#mclk_config     00000092    # 146MHz
+
+#================================================================================
+# DRAM Configuration
+#================================================================================
+#dram_config     0004001e    # 11110: 64Mb , 4Mb x 16 (2x12x8 dram type)
+#dram_config     0004001b    # 11011: 16Mb , 1Mb x 16 
+
+#dram_config     0108011e    # 11110: 64Mb (909P)
+dram_config     0108011b    # 11011: 16MB (909P)
+
+#dram_config     00090018    # 11110: 32Mb (909G)
+#dram_config     0009001b    # 11011: 16Mb (909G)
+
+#================================================================================
+# PROM Configuration
+#================================================================================
+# PROM_CONFIG for Serial: 00Ps 0000 0LRt 0SSs Fcyb Hcyb Fcya Hcya
+#   Ps:PROM_Size, L:Latency, Rt:Read_Type, Ss:SCLK_SEL,
+#   Fcyb:Full_cycle1, Hcyb:Half_cycle1, Fcya:Full_cycle0, Hcya:Half_cycle0)
+
+#prom_config     00003131    # Serial   4M Latency=0 NormalRead SCLK_SEL=0 33MHz
+#prom_config     00013131    # Serial   4M Latency=0 NormalRead SCLK_SEL=1 33MHz
+#prom_config     00023131    # Serial   4M Latency=0 NormalRead SCLK_SEL=2 33MHz
+#prom_config     00033131    # Serial   4M Latency=0 NormalRead SCLK_SEL=3 33MHz
+#prom_config     00601031    # Serial   4M Latency=1 FastRead   SCLK_SEL=0 66MHz
+#prom_config     00611031    # Serial   4M Latency=1 FastRead   SCLK_SEL=1 66MHz
+#prom_config     00621031    # Serial   4M Latency=1 FastRead   SCLK_SEL=2 66MHz
+#prom_config     00631031    # Serial   4M Latency=1 FastRead   SCLK_SEL=3 66MHz
+#prom_config     20003131    # Serial   8M Latency=0 NormalRead SCLK_SEL=0 33MHz
+#prom_config     20013131    # Serial   8M Latency=0 NormalRead SCLK_SEL=1 33MHz
+#prom_config     20023131    # Serial   8M Latency=0 NormalRead SCLK_SEL=2 33MHz
+#prom_config     20033131    # Serial   8M Latency=0 NormalRead SCLK_SEL=3 33MHz
+#prom_config     20601031    # Serial   8M Latency=1 FastRead   SCLK_SEL=0 66MHz
+#prom_config     20611031    # Serial   8M Latency=1 FastRead   SCLK_SEL=1 66MHz
+#prom_config     20621031    # Serial   8M Latency=1 FastRead   SCLK_SEL=2 66MHz
+#prom_config     20631031    # Serial   8M Latency=1 FastRead   SCLK_SEL=3 66MHz
+#prom_config     20322031    # Serial   8M Latency=0 DoubleFastRead   SCLK_SEL=2 44MHz
+#prom_config     20721010    # Serial   8M Latency=1 DoubleFastRead   SCLK_SEL=2 66MHz
+
+#prom_config     20443131    # Serial   8M Latency=1 NormalRead SCLK_SEL=4 33MHz (909P)
+prom_config     20541010    # Serial   8M Latency=1 FastRead   SCLK_SEL=4 66MHz (909P)
+#prom_config     20641010    # Serial   8M Latency=1 DoubleFastRead   SCLK_SEL=2 66MHz (909P)
+
+#prom_config     20043131    # Serial   8M Latency=0 NormalRead SCLK_SEL=4 33MHz (909G)
+#prom_config     20541010    # Serial   8M Latency=1 FastRead   SCLK_SEL=4 33MHz (909G)
+
+#prom_config     80824c84    # Parallel 4M
+#prom_config     a0824c84    # Parallel 8M
+
+
+#================================================================================
+# TAG Configuration
+#================================================================================
+ctk_tag0        4043544b
+ctk_tag1        4452414d
+ctk_tag2        50524F4D
+rom_tag0        40524f4d
+rom_tag1        494e464f

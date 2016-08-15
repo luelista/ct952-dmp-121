@@ -1,0 +1,12 @@
+#ifndef __CONVCHAR_H__
+#define __CONVCHAR_H__
+
+WORD CONVCHAR_ASCII_To_CTK(BYTE bChar);
+WORD CONVCHAR_Uni_To_CTK(WORD wChar);
+WORD CONVCHAR_ISO_CP_To_CTK(BYTE bChar);
+WORD CONVCHAR_To_Uni(WORD wChar);
+WORD CONVCHAR_Uni_To_IDX(WORD wChar);
+WORD CONVCHAR_Uni_To_FontSize(WORD wChar); 
+
+#endif //__CONVCHAR_H__
+

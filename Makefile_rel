@@ -1,0 +1,419 @@
+# Mostly written by Jonathan Larmour, Red Hat, Inc.
+# Reference to ecos.mak added by John Dallaway, eCosCentric Limited, 2003-01-20
+# This file is in the public domain and may be used for any purpose
+
+# Usage:   make INSTALL_DIR=/path/to/ecos/install
+
+# INSTALL_DIR=$$(INSTALL_DIR) # override on make command line
+# use for version that later DVD_120.
+INSTALL_DIR=/ecos-c/ct909/ecos_build/ct909_release_install_2.0.1
+# use for 16M version
+# INSTALL_DIR=/ecos-c/ct909/ecos_build/ct909_release_install_2.0.1
+# use for version that version before DVD_120.
+#INSTALL_DIR=/ecos-d/Project/CT909/develop/ecos_build/ct909_release_install_2.0.1
+#INSTALL_DIR=/ecos-c/prj/CT909/ecos_build/ct909_release_install_2.0.1
+# INSTALL_DIR=/ecos-c/ct909/ecos_build/ct909_debug_install
+ECOS_GLOBAL_CFLAGS_DBG = -msoft-float -Wall -Wpointer-arith -Wstrict-prototypes -Winline -Wundef -Woverloaded-virtual -g -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -fvtable-gc -finit-priority
+include $(INSTALL_DIR)/include/pkgconf/ecos.mak
+
+# below is for control the switch
+# ENV_DEVELOP   : Mean it's for developer only. It will compile/clean sub-directory
+ENV_DEVELOP         = 0
+
+
+#
+IC_VERSION	= 68
+UPG_NAME	= UPG956AD.AP
+
+
+# SUPPORT_STB   : Mean DVD + STB
+SUPPORT_STB		= 0
+
+# SUPPORT_950   : Mean remove servo and DVD part.
+SUPPORT_950		= 0
+
+DVD_INCLUDE		:=
+
+ifeq ($(SUPPORT_STB), 1)
+PARCFG              = gen_dvb
+ECOS_INSTALL_DIR 	:= $(INSTALL_DIR)
+DVD_PATH			:= $(shell pwd)
+STB_PATH			:= $(DVD_PATH)/STB
+DVD_INCLUDE     	+= $(EXTRA_INCLUDE)
+DVD_INCLUDE			+= -I ./
+STB_OBJ_PATH		= ./STB/ct_objs/
+LDFLAGS         	= -nostartfiles -L$(INSTALL_DIR)/lib -Tstb/CT219.ld
+export DVD_PATH STB_PATH ECOS_INSTALL_DIR ENV_DEVELOP
+include stb/STB_CFG.mk
+else
+PARCFG              =
+LDFLAGS         	= -nostartfiles -L$(INSTALL_DIR)/lib -TDVD909.ld
+endif
+
+# below is for Makefile itself.
+XCC             = $(ECOS_COMMAND_PREFIX)gcc
+XCXX            = $(XCC)
+XLD             = $(XCC)
+
+OBJ_PATH            = ./OBJS/
+USB_PATH            = ./USB/
+
+DVD_INCLUDE	+= -I $(INSTALL_DIR)/include
+
+CFLAGS          = $(DVD_INCLUDE) -g
+CFLAGS_SYS      =
+CFLAGS_PROC2    =
+DIVXCFLAGS      = -DROMCODE
+SERVOCFLAGS     =
+CXXFLAGS        = $(CFLAGS)
+# LDFLAGS         = -nostartfiles -L$(INSTALL_DIR)/lib -Ttarget.ld
+#LDFLAGS         = -nostartfiles -L$(INSTALL_DIR)/lib -TDVD909.ld
+
+OBJ             =  $(OBJ_PATH)cc.o  $(OBJ_PATH)cckey.o  \
+	$(OBJ_PATH)chips.o  $(OBJ_PATH)comutl.o  $(OBJ_PATH)digest.o  $(OBJ_PATH)gdi.o  \
+	$(OBJ_PATH)hal.o  $(OBJ_PATH)haljpeg.o  $(OBJ_PATH)initial.o  $(OBJ_PATH)linear.o \
+	$(OBJ_PATH)media.o $(OBJ_PATH)mm_file.o $(OBJ_PATH)mm_play.o $(OBJ_PATH)mm_ui.o $(OBJ_PATH)monitor.o   \
+	$(OBJ_PATH)osd.o  $(OBJ_PATH)osd3.o  $(OBJ_PATH)osddg.o  \
+	$(OBJ_PATH)osddlg.o  $(OBJ_PATH)osddsply.o  $(OBJ_PATH)osdfont1.o  $(OBJ_PATH)osdmm.o  $(OBJ_PATH)osdnd.o  \
+	$(OBJ_PATH)osdprgm.o  $(OBJ_PATH)setup.o  $(OBJ_PATH)srcfilter.o  $(OBJ_PATH)thumb.o \
+	$(OBJ_PATH)utl.o  $(OBJ_PATH)interrupt.o $(OBJ_PATH)hadac.o $(OBJ_PATH)hdecoder.o $(OBJ_PATH)hdevice.o\
+	$(OBJ_PATH)osdsrch.o  $(OBJ_PATH)osdbmark.o  $(OBJ_PATH)input.o \
+	$(OBJ_PATH)debug.o $(OBJ_PATH)osdss.o  $(OBJ_PATH)osddivx.o  $(OBJ_PATH)hio.o  $(OBJ_PATH)hsystem.o \
+	$(OBJ_PATH)panel.o  $(OBJ_PATH)usbsrc.o  $(OBJ_PATH)aploader.o $(OBJ_PATH)tft.o  $(OBJ_PATH)char_subpict.o \
+	$(OBJ_PATH)oswrap.o  $(OBJ_PATH)osdap.o  $(OBJ_PATH)spflash.o $(OBJ_PATH)stringdec.o \
+        $(OBJ_PATH)romld.o $(OBJ_PATH)notransl.o $(OBJ_PATH)convchar.o \
+        $(USB_PATH)jos_mem.o $(USB_PATH)usbdi.o 
+
+ifeq ($(SUPPORT_950), 1)	
+950OBJ = $(OBJ_PATH)menu.o  $(OBJ_PATH)toolbar.o $(OBJ_PATH)mainmenu.o $(OBJ_PATH)dvdsetup.o $(OBJ_PATH)dvdsetup_op.o $(OBJ_PATH)poweronmenu.o $(OBJ_PATH)clock.o $(OBJ_PATH)rtcdrv.o $(OBJ_PATH)settime.o $(OBJ_PATH)dialog.o $(OBJ_PATH)calenui.o $(OBJ_PATH)alarm.o $(OBJ_PATH)autopower.o $(OBJ_PATH)edit.o $(OBJ_PATH)backdoor.o $(OBJ_PATH)setdate.o $(OBJ_PATH)radiodrv.o $(OBJ_PATH)radio.o $(OBJ_PATH)notedlg.o
+endif	
+
+DBGOBJ          =
+
+DBGFILES        = $(addsuffix .d,$(DBGOBJ))
+ifeq ($(SUPPORT_STB), 1)
+ifeq ($(SUPPORT_950), 0)
+ARCHIVE     = decoder.a dec_dram.a parserdvb.a pardvbdram.a pardrm.a display.a navigate.a info.a usb.a tve.a $(STB_OBJ_PATH)stb.a card.a
+else
+ARCHIVE     = decoder.a dec_dram.a parserdvb.a pardvbdram.a pardrm.a display.a info.a usb.a tve.a $(STB_OBJ_PATH)stb.a encoder.a card.a
+endif
+else
+ifeq ($(SUPPORT_950), 0)
+ARCHIVE     = decoder.a dec_dram.a parser.a pardrm.a display.a navigate.a info.a osdgame.a usb.a tve.a pardram.a card.a
+else
+ARCHIVE     = decoder.a dec_dram.a parser.a pardrm.a display.a info.a usb.a tve.a pardram.a encoder.a card.a
+endif
+endif
+
+ROM_FILE    = DVD909.rom
+ROMCFG_FILE = romcfg.txt
+CAT_UTIL    = /bin/cat
+GZIP_UTIL   = gz909
+ZIP2006_UTIL   = ZIP2006 e
+ZIP2006_FLAGS  =
+OBJCOPY     = sparc-rtems-objcopy
+
+# RULES
+
+.PHONY: all clean
+
+all:
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+debug: general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD MAKEROM_OPT=-dj
+
+16D: 
+	@make clean
+	@bash adjust.sh -d 16d
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+16d: 
+	@make clean
+	@bash adjust.sh -d 16d
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+16R: 
+	@make clean
+	@bash adjust.sh -d 16r
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+16r: 
+	@make clean
+	@bash adjust.sh -d 16r
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+16: 
+	@make clean
+	@bash adjust.sh -d 16
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+32: 
+	@make clean
+	@bash adjust.sh -d 32
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+
+64: 
+	@make clean
+	@bash adjust.sh -d 64
+	@make general
+ifeq ($(ENV_DEVELOP), 1)
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+endif
+	@make WinDVD
+	
+servo: general
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+	@make WinDVD
+
+clean:
+	-mv usb.a usb.ttt
+	-mv pardrm.a pardrm.ttt
+	-mv parnodrm.a parnodrm.ttt
+	-mv parserdvb.a parserdvb.ttt
+	-mv pardvbdram.a pardvbdram.ttt
+#	-mv dsu_boot_flash.tsim dsu_boot_flash.ttt
+#	-mv dsu_boot_audio_flash.tsim dsu_boot_audio_flash.ttt
+	-rm -f -v *.o *.tsim *% core *.bak *.bin.gz *.FIN
+	-rm -f -v DVD909.rom dsu_boot.rom dsu_boot_audio.rom boot.fin
+	-rm -f -v $(OBJ_PATH)*.o
+	-rm -f -v rominfo.bin
+	-rm -f -v *.AP
+#	-mv boot.ttt boot.tsim
+	cd OSDString && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+ifeq ($(ENV_DEVELOP), 1)
+	cd display && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	cd parser && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	cd decoder && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+#	cd mp4 && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	cd navigate && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	cd info && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+ifeq ($(SUPPORT_STB), 0)	
+	cd osdgame && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+endif	
+#	cd usb && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	cd tve && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+ifeq ($(SUPPORT_950), 1)	
+	cd jpegenc && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+endif
+#	cd boot && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	cd card && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+	-rm -f -v *.a
+endif
+ifeq ($(SUPPORT_STB), 1)
+	cd STB && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+endif
+
+ifeq ($(SUPPORT_950), 0)
+	cd servo && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) clean
+endif
+	-mv usb.ttt usb.a
+	-mv pardrm.ttt pardrm.a
+	-mv parnodrm.ttt parnodrm.a
+	-mv parserdvb.ttt parserdvb.a
+	-mv pardvbdram.ttt pardvbdram.a
+#	-mv dsu_boot_flash.ttt dsu_boot_flash.tsim
+#	-mv dsu_boot_audio_flash.ttt dsu_boot_audio_flash.tsim
+
+%.o: %.c
+	@echo "     COMPILING    :  $<"
+	@$(XCC) -c -o  $(OBJ_PATH)$*.o $(CFLAGS) $(DIVXCFLAGS) $(SERVOCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS) $(CFLAGS_SYS) $<
+
+$(OBJ_PATH)%.o: %.c
+	@echo "     COMPILING    :  $<"
+	@$(XCC) -c -o  $(OBJ_PATH)$*.o $(CFLAGS) $(DIVXCFLAGS) $(SERVOCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS) $(CFLAGS_SYS) $<
+
+%.o: %.cxx
+	@echo "     COMPILING    :  $<"
+	@$(XCXX) -c -o  $(OBJ_PATH)$*.o $(CXXFLAGS) $(DIVXCFLAGS) $(SERVOCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS) $(CFLAGS_SYS) $<
+
+%.o: %.C
+	@echo "     COMPILING    :  $<"
+	@$(XCXX) -c -o $(OBJ_PATH)$*.o $(CXXFLAGS) $(DIVXCFLAGS) $(SERVOCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS) $(CFLAGS_SYS) $<
+
+%.o: %.cc
+	@echo "     COMPILING    :  $<"
+	@$(XCXX) -c -o  $(OBJ_PATH)$*.o $(CXXFLAGS) $(DIVXCFLAGS) $(SERVOCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS) $(CFLAGS_SYS) $<
+
+$(OBJ_PATH)%.o.d: %.c
+	@echo "     COMPILING    :  $<"
+	@$(XCC) -c -o  $(OBJ_PATH)$*.o $(CFLAGS) $(DIVXCFLAGS) $(SERVOCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS_DBG) $(CFLAGS_SYS) $<
+
+proc2:
+	@make CFLAGS_PROC2=-DDEBUG_PROC2
+
+ifeq ($(SUPPORT_950), 1)
+WinDVD:  $(OBJ) $(950OBJ) $(DBGFILES) $(OBJ_PATH)servo.o
+	@echo "     LINKING      :  $(OBJ) $(950OBJ) $(DBGOBJ) $(ARCHIVE)"
+	@$(XLD) $(LDFLAGS) $(ECOS_GLOBAL_LDFLAGS) -o DVD909_tmp.tsim $(OBJ) $(950OBJ) $(DBGOBJ) $(OBJ_PATH)servo.o $(ARCHIVE)
+else
+WinDVD:  $(OBJ) $(DBGFILES) $(OBJ_PATH)servo.o
+	@echo "     LINKING      :  $(OBJ) $(DBGOBJ) $(ARCHIVE) servo.a srv_dram.a"
+	@$(XLD) $(LDFLAGS) $(ECOS_GLOBAL_LDFLAGS) -o DVD909_tmp.tsim $(OBJ) $(DBGOBJ) $(OBJ_PATH)servo.o $(ARCHIVE) servo.a srv_dram.a
+endif
+	@sparc-rtems-nm --numeric-sort DVD909_tmp.tsim > DVD909.sym
+	@echo "     Build Cheer909 ready... DVD909.tsim; DVD909.sym."
+	@make merge_proc2
+	@make Build_ROM
+
+atapi:  general $(OBJ) $(DBGFILES) $(OBJ_PATH)atapi.o
+	@echo "     LINKING      :  $(OBJ) $(DBGOBJ) $(OBJ_PATH)atapi.o $(ARCHIVE)"
+	@$(XLD) $(LDFLAGS) $(ECOS_GLOBAL_LDFLAGS) -o DVD909_tmp.tsim $(OBJ) $(DBGOBJ) $(OBJ_PATH)atapi.o $(ARCHIVE)
+	@make merge_proc2
+	@make Build_ROM
+
+merge_proc2:    DVD909_tmp.tsim
+	@echo "     Merge DVD909_tmp.tsim and audio.bin to DVD909.tsim ..."
+#	@$(OBJCOPY) --add-section=.bits=./mpg.bin --adjust-section-vma=.bits=0x40002000 --no-adjust-warnings --set-section-flags=.bits=alloc,load,data DVD909_tmp.tsim DVD909.tsim
+	-mv DVD909_tmp.tsim DVD909.tsim
+
+
+########################################################################
+bottom:
+	@echo ""
+	@echo "Set to BOTTOM Flash:"
+	@rm -f -v setd_cfg.txt
+	@cp -p -v bottom_flash.txt setd_cfg.txt
+
+top4m:
+	@echo ""
+	@echo "Set to TOP4M Flash:"
+	@rm -f -v setd_cfg.txt
+	@cp -p -v top4m_flash.txt setd_cfg.txt
+
+top8m:
+	@echo ""
+	@echo "Set to TOP8M Flash:"
+	@rm -f -v setd_cfg.txt
+	@cp -p -v top8m_flash.txt setd_cfg.txt
+
+
+########################################################################
+rominfo.bin:
+	@rominfo.exe
+	@$(XCC) -c -o rominfo.o rominfo.c
+	@$(OBJCOPY) -j .text rominfo.o -O binary rominfo.bin
+
+boot.fin: boot.bin address.txt rominfo.bin
+	@extend909.exe
+
+
+dsu_boot.rom: address.txt rominfo.bin
+	@echo ""
+	@echo "Compose DSU Boot ROM Image:"
+	@extend909.exe
+	@cp boot.fin dsu_boot.rom
+
+dsu_boot_flash.tsim: dsu_boot.rom
+	@echo ""
+	@echo "Compose DSU Boot TSIM for Flash:"
+	@cp dsu_boot.rom dvd909.rom
+	@makerom -dl upgcfg.txt UPG909.ROM
+	@appacker -N 1 -C $(IC_VERSION) -S 0x4003F000 -Z 0x40040000 -IP UPG909.ROM -OP dsu_boot_flash.AP -D "UPG909"
+	@$(OBJCOPY) --add-section=.bits=./dsu_boot_flash.AP --adjust-section-vma=.bits=0x40090000 --no-adjust-warnings --set-section-flags=.bits=alloc,load,data flash_dsu_main.upgrade dsu_boot_flash.tsim
+	@rm -f dsu_boot_flash.AP dvd909.rom
+
+dsu_boot_audio.rom: dsu_boot.rom romcfg.txt ac3_dts.bin mpg_pcm.bin wma.bin
+	@echo ""
+	@echo "Compose DSU Boot Audio ROM Image:"
+	@makerom -dj -dt romcfg.txt dsu_boot_audio.rom
+
+dsu_boot_audio_flash.tsim: dsu_boot_audio.rom
+	@echo ""
+	@echo "Compose DSU Boot Audio TSIM for Flash:"
+	@cp dsu_boot_audio.rom dvd909.rom
+	@makerom -dl upgcfg.txt UPG909.ROM
+	@appacker -N 1 -C $(IC_VERSION) -S 0x4003F000 -Z 0x40040000 -IP UPG909.ROM -OP dsu_boot_audio_flash.AP -D "UPG909"
+	@$(OBJCOPY) --add-section=.bits=./dsu_boot_audio_flash.AP --adjust-section-vma=.bits=0x40090000 --no-adjust-warnings --set-section-flags=.bits=alloc,load,data flash_dsu_main.upgrade dsu_boot_audio_flash.tsim
+	@rm -f dsu_boot_audio_flash.AP dvd909.rom
+
+Build_ROM: dsu_boot.rom dsu_boot_flash.tsim dsu_boot_audio.rom dsu_boot_audio_flash.tsim  DVD909.rom
+DVD909.rom: DVD909.tsim boot.fin
+	@echo ""
+	@echo "Compose DVD909 ROM Image:"
+	@makerom $(MAKEROM_OPT) $(ROMCFG_FILE) $(ROM_FILE)
+	@echo ""
+	@echo "Compose UPG909 ROM Image:"
+	@makerom -dl upgcfg.txt UPG909.ROM
+	@appacker -N 1 -C $(IC_VERSION) -S 0x4003F000 -Z 0x40040000 -IP UPG909.ROM -OP $(UPG_NAME) -D "UPG909"
+	@$(OBJCOPY) --add-section=.bits=./$(UPG_NAME) --adjust-section-vma=.bits=0x40090000 --no-adjust-warnings --set-section-flags=.bits=alloc,load,data flash_dsu_main.upgrade DVD909_flash.tsim
+	@rm -f UPG909.rom
+	@echo "     Build Cheer909 ROM ready... DVD909.rom; flash_dsu.tsim;" $(UPG_NAME)
+
+general:
+	@bash adjust.sh -c
+	@echo $(CFLAGS) $(DIVXCFLAGS) $(CFLAGS_PROC2) $(ECOS_GLOBAL_CFLAGS)
+ifeq ($(ENV_DEVELOP), 1)
+	cd display && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+	cd parser && $(MAKE) INSTALL_DIR=$(INSTALL_DIR) $(PARCFG)
+	cd decoder && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+#	cd mp4 && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+	cd navigate && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+	cd info && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+ifeq ($(SUPPORT_STB), 0)	
+	cd osdgame && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif	
+#	cd usb && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+	cd tve && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+ifeq ($(SUPPORT_950), 1)	
+	cd jpegenc && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+#	cd boot && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+	cd card && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+
+ifeq ($(SUPPORT_STB), 1)
+	cd STB && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+endif
+
+	cd OSDString && $(MAKE) INSTALL_DIR=$(INSTALL_DIR)
+

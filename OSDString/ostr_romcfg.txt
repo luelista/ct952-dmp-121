@@ -1,0 +1,7 @@
+"OSDString/Str_Dutch.bin", "Dutc", , , 1, 0, 0;
+"OSDString/Str_French.bin", "Fren", , , 1, 0, 0;
+"OSDString/Str_German.bin", "Germ", , , 1, 0, 0;
+"OSDString/Str_Italian.bin", "Ital", , , 1, 0, 0;
+"OSDString/Str_Polish.bin", "Poli", , , 1, 0, 0;
+"OSDString/Str_Portuguese.bin", "Port", , , 1, 0, 0;
+"OSDString/Str_Spanish.bin", "Span", , , 1, 0, 0;
